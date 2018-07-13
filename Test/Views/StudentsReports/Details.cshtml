@@ -1,0 +1,62 @@
+﻿@model Test.Models.StudentsReport
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@Html.Partial("_Sidebar")
+
+<div class="main">
+    <h2>Details</h2>
+
+    <div>
+        <h4>StudentsReport</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstExam)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FirstExam)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SecondExam)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SecondExam)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Ready)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Ready)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Curriculum.Id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Curriculum.Id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Student.UserId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Student.UserId)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

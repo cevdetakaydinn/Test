@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Test.Models.StudentsReport>
+
+@{
+    ViewBag.Title = "Index";
+}
+@Html.Partial("_Sidebar")
+
+<div class="main">
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstExam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecondExam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ready)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Curriculum.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student.UserId)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstExam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecondExam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ready)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Curriculum.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.UserId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>

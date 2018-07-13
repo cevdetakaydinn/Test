@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="85c0523bde144373ba4e94f30cbd466a" Name="Diagram1">
+        <EntityTypeShape EntityType="DbMigrationExampleModel.Curriculum" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMigrationExampleModel.Lesson" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMigrationExampleModel.Student" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMigrationExampleModel.StudentsReport" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMigrationExampleModel.Task" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMigrationExampleModel.Teacher" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMigrationExampleModel.Term" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="DbMigrationExampleModel.FK_Cirruculum_Lesson" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMigrationExampleModel.FK_Cirruculum_Teacher" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMigrationExampleModel.FK_Cirruculum_Term" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMigrationExampleModel.FK_StudentsReports_Cirruculum" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMigrationExampleModel.FK_Student_Term" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMigrationExampleModel.FK_StudentsReports_Student" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

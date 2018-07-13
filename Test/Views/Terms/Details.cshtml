@@ -1,0 +1,37 @@
+﻿@model Test.Models.Term
+
+@{
+    ViewBag.Title = "Details";
+}
+@Html.Partial("_Sidebar")
+
+<div class="main">
+    <h2>Details</h2>
+
+    <div>
+        <h4>Term</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Year)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Year)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Term1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Term1)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DbMigrationExampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Curriculum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="LessonId" Type="int" />
+          <Property Name="TeacherId" Type="int" />
+          <Property Name="TermId" Type="int" />
+        </EntityType>
+        <EntityType Name="Lesson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="StudentNo" Type="nchar" MaxLength="20" />
+          <Property Name="TermId" Type="int" />
+        </EntityType>
+        <EntityType Name="StudentsReports">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" />
+          <Property Name="CirruculumId" Type="int" />
+          <Property Name="FirstExam" Type="int" />
+          <Property Name="SecondExam" Type="int" />
+          <Property Name="Ready" Type="bit" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Task" Type="nchar" MaxLength="10" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Term">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Term" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Cirruculum_Lesson">
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="0..1" />
+          <End Role="Curriculum" Type="Self.Curriculum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Curriculum">
+              <PropertyRef Name="LessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cirruculum_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Curriculum" Type="Self.Curriculum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Curriculum">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cirruculum_Term">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Curriculum" Type="Self.Curriculum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Curriculum">
+              <PropertyRef Name="TermId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Term">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="TermId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsReports_Cirruculum">
+          <End Role="Curriculum" Type="Self.Curriculum" Multiplicity="0..1" />
+          <End Role="StudentsReports" Type="Self.StudentsReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curriculum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsReports">
+              <PropertyRef Name="CirruculumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsReports_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="StudentsReports" Type="Self.StudentsReports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsReports">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbMigrationExampleModelStoreContainer">
+          <EntitySet Name="Curriculum" EntityType="Self.Curriculum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lesson" EntityType="Self.Lesson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentsReports" EntityType="Self.StudentsReports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Term" EntityType="Self.Term" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Cirruculum_Lesson" Association="Self.FK_Cirruculum_Lesson">
+            <End Role="Lesson" EntitySet="Lesson" />
+            <End Role="Curriculum" EntitySet="Curriculum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cirruculum_Teacher" Association="Self.FK_Cirruculum_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Curriculum" EntitySet="Curriculum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cirruculum_Term" Association="Self.FK_Cirruculum_Term">
+            <End Role="Term" EntitySet="Term" />
+            <End Role="Curriculum" EntitySet="Curriculum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Term" Association="Self.FK_Student_Term">
+            <End Role="Term" EntitySet="Term" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsReports_Cirruculum" Association="Self.FK_StudentsReports_Cirruculum">
+            <End Role="Curriculum" EntitySet="Curriculum" />
+            <End Role="StudentsReports" EntitySet="StudentsReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsReports_Student" Association="Self.FK_StudentsReports_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentsReports" EntitySet="StudentsReports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbMigrationExampleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Curriculum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="LessonId" Type="Int32" />
+          <Property Name="TeacherId" Type="Int32" />
+          <Property Name="TermId" Type="Int32" />
+          <NavigationProperty Name="Lesson" Relationship="Self.FK_Cirruculum_Lesson" FromRole="Curriculum" ToRole="Lesson" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Cirruculum_Teacher" FromRole="Curriculum" ToRole="Teacher" />
+          <NavigationProperty Name="Term" Relationship="Self.FK_Cirruculum_Term" FromRole="Curriculum" ToRole="Term" />
+          <NavigationProperty Name="StudentsReports" Relationship="Self.FK_StudentsReports_Cirruculum" FromRole="Curriculum" ToRole="StudentsReports" />
+        </EntityType>
+        <EntityType Name="Lesson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Curricula" Relationship="Self.FK_Cirruculum_Lesson" FromRole="Lesson" ToRole="Curriculum" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StudentNo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="TermId" Type="Int32" />
+          <NavigationProperty Name="Term" Relationship="Self.FK_Student_Term" FromRole="Student" ToRole="Term" />
+          <NavigationProperty Name="StudentsReports" Relationship="Self.FK_StudentsReports_Student" FromRole="Student" ToRole="StudentsReports" />
+        </EntityType>
+        <EntityType Name="StudentsReport">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" />
+          <Property Name="CirruculumId" Type="Int32" />
+          <Property Name="FirstExam" Type="Int32" />
+          <Property Name="SecondExam" Type="Int32" />
+          <Property Name="Ready" Type="Boolean" />
+          <NavigationProperty Name="Curriculum" Relationship="Self.FK_StudentsReports_Cirruculum" FromRole="StudentsReports" ToRole="Curriculum" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_StudentsReports_Student" FromRole="StudentsReports" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Task1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Curricula" Relationship="Self.FK_Cirruculum_Teacher" FromRole="Teacher" ToRole="Curriculum" />
+        </EntityType>
+        <EntityType Name="Term">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Term1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Curricula" Relationship="Self.FK_Cirruculum_Term" FromRole="Term" ToRole="Curriculum" />
+          <NavigationProperty Name="Students" Relationship="Self.FK_Student_Term" FromRole="Term" ToRole="Student" />
+        </EntityType>
+        <Association Name="FK_Cirruculum_Lesson">
+          <End Role="Lesson" Type="Self.Lesson" Multiplicity="0..1" />
+          <End Role="Curriculum" Type="Self.Curriculum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Curriculum">
+              <PropertyRef Name="LessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cirruculum_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
+          <End Role="Curriculum" Type="Self.Curriculum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Curriculum">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cirruculum_Term">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Curriculum" Type="Self.Curriculum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Curriculum">
+              <PropertyRef Name="TermId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsReports_Cirruculum">
+          <End Role="Curriculum" Type="Self.Curriculum" Multiplicity="0..1" />
+          <End Role="StudentsReports" Type="Self.StudentsReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Curriculum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsReports">
+              <PropertyRef Name="CirruculumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Student_Term">
+          <End Role="Term" Type="Self.Term" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="TermId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StudentsReports_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="StudentsReports" Type="Self.StudentsReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StudentsReports">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbMigrationExampleEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Curricula" EntityType="Self.Curriculum" />
+          <EntitySet Name="Lessons" EntityType="Self.Lesson" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="StudentsReports" EntityType="Self.StudentsReport" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <EntitySet Name="Terms" EntityType="Self.Term" />
+          <AssociationSet Name="FK_Cirruculum_Lesson" Association="Self.FK_Cirruculum_Lesson">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="Curriculum" EntitySet="Curricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cirruculum_Teacher" Association="Self.FK_Cirruculum_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Curriculum" EntitySet="Curricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cirruculum_Term" Association="Self.FK_Cirruculum_Term">
+            <End Role="Term" EntitySet="Terms" />
+            <End Role="Curriculum" EntitySet="Curricula" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsReports_Cirruculum" Association="Self.FK_StudentsReports_Cirruculum">
+            <End Role="Curriculum" EntitySet="Curricula" />
+            <End Role="StudentsReports" EntitySet="StudentsReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Student_Term" Association="Self.FK_Student_Term">
+            <End Role="Term" EntitySet="Terms" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StudentsReports_Student" Association="Self.FK_StudentsReports_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentsReports" EntitySet="StudentsReports" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbMigrationExampleModelStoreContainer" CdmEntityContainer="DbMigrationExampleEntities1">
+          <EntitySetMapping Name="Curricula">
+            <EntityTypeMapping TypeName="DbMigrationExampleModel.Curriculum">
+              <MappingFragment StoreEntitySet="Curriculum">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="TermId" ColumnName="TermId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lessons">
+            <EntityTypeMapping TypeName="DbMigrationExampleModel.Lesson">
+              <MappingFragment StoreEntitySet="Lesson">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="DbMigrationExampleModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="StudentNo" ColumnName="StudentNo" />
+                <ScalarProperty Name="TermId" ColumnName="TermId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentsReports">
+            <EntityTypeMapping TypeName="DbMigrationExampleModel.StudentsReport">
+              <MappingFragment StoreEntitySet="StudentsReports">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="CirruculumId" ColumnName="CirruculumId" />
+                <ScalarProperty Name="FirstExam" ColumnName="FirstExam" />
+                <ScalarProperty Name="SecondExam" ColumnName="SecondExam" />
+                <ScalarProperty Name="Ready" ColumnName="Ready" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="DbMigrationExampleModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Task1" ColumnName="Task" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="DbMigrationExampleModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Terms">
+            <EntityTypeMapping TypeName="DbMigrationExampleModel.Term">
+              <MappingFragment StoreEntitySet="Term">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Term1" ColumnName="Term" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

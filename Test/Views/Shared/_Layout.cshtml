@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Tasker</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-primary py-md-0 py-0">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"></button>
+            @Html.ActionLink("School", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Tasks", "index", "Tasks", null, new { @class = "nav-link" })</li>
+
+                    @if (User.IsInRole("Teacher") || User.IsInRole("Principal"))
+                    {
+                        <li>@Html.ActionLink("Admin Page", "index", "Admin", null, new { @class = "nav-link" })</li>
+                    }
+                    else if (User.IsInRole("Student"))
+                    {
+                        @Html.ActionLink("My Info", "Details", "Students",
+                        new {
+                            //Need to send student id by finding user id via controller!!
+                            id = User.Identity.GetUserId()
+                        },
+                        new { @class = "nav-link" })
+                    }
+
+
+
+                    <li>@Html.ActionLink("MyTasks", "LoadTaskbyUser", "Tasks", new { UserId = User.Identity.GetUserId() }, new { @class = "nav-link" })</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right mr-auto">
+
+            </div>
+        </div>
+    </nav>
+    <div class="bodymarg container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

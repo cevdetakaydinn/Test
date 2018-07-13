@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "_Sidebar";
+}
+
+<style>
+
+
+    .sidenav {
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #007bff;
+        overflow-x: hidden;
+        padding-top: 20px;
+        margin-top: 56px;
+    }
+
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 18px;
+            color: White;
+            display: block;
+            
+        }
+
+            .sidenav a:hover {
+                color: navajowhite;
+            }
+
+    .main {
+        margin-left: 10px; /* Same as the width of the sidenav */
+        margin-top: 15px;
+        font-size: 28px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+</style>
+
+<div class="sidenav">
+    @Html.ActionLink("Student", "Index", "Students")
+    @Html.ActionLink("Lessons", "Index", "Lessons")
+    @Html.ActionLink("Teachers", "Index", "Teachers")
+    @Html.ActionLink("Terms", "Index", "Terms")
+    @Html.ActionLink("Curriculums", "Index", "Curricula")
+    @Html.ActionLink("Reports", "Index", "StudentsReports")
+
+
+</div>
+
