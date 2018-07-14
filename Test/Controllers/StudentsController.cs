@@ -1,7 +1,11 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -34,6 +38,24 @@ namespace Test.Controllers
             }
             Student student = db.Students.Find(id);
             ViewBag.userInfo = db2.Users.Find(student.UserId);
+            var reports = student.StudentsReports.ToList();
+            ViewBag.reports = reports;
+            //Toplam devamsızlık hesabı
+            int TotalAbsent=0;
+            if (reports != null)
+            {
+                foreach (var i in reports)
+                {
+                    if(!i.Absent.HasValue)
+                    {
+                        i.Absent = 0;
+                    }
+                    TotalAbsent = TotalAbsent + (int)i.Absent;
+                }
+
+            }
+            ViewBag.totalAbsent = TotalAbsent;
+
             if (student == null)
             {
                 return HttpNotFound();
@@ -129,6 +151,24 @@ namespace Test.Controllers
             db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        //Export html element to pdf
+        [HttpPost]
+        [ValidateInput(false)]
+        public FileResult Export(string GridHtml)
+        {
+            using (MemoryStream stream = new System.IO.MemoryStream())
+            {
+                StringReader sr = new StringReader(GridHtml);
+                Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                pdfDoc.Close();
+                return File(stream.ToArray(), "application/pdf", "Grid.pdf");
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -20,6 +20,7 @@ namespace Test.Models
         public Nullable<int> FirstExam { get; set; }
         public Nullable<int> SecondExam { get; set; }
         public Nullable<bool> Ready { get; set; }
+        public Nullable<int> Absent { get; set; }
     
         public virtual Curriculum Curriculum { get; set; }
         public virtual Student Student { get; set; }

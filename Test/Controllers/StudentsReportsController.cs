@@ -14,11 +14,20 @@ namespace Test.Controllers
     {
         private DbMigrationExampleEntities1 db = new DbMigrationExampleEntities1();
 
-        // GET: StudentsReports
-        public ActionResult Index()
-        {
-            var studentsReports = db.StudentsReports.Include(s => s.Curriculum).Include(s => s.Student);
-            return View(studentsReports.ToList());
+        // GET: StudentsReports Eğer parametre varsa öğrenciye ait dersnotlarını listele
+        public ActionResult Index(int? i)
+        {   
+            if (i.HasValue)
+            {
+                var studentReports = db.StudentsReports.Where(x => x.StudentId == i);
+                return View(studentReports.ToList());
+            }
+            else
+            {
+                var studentsReports = db.StudentsReports.Include(s => s.Curriculum).Include(s => s.Student);
+                return View(studentsReports.ToList());
+            }
+
         }
 
         // GET: StudentsReports/Details/5
@@ -49,7 +58,7 @@ namespace Test.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,StudentId,CirruculumId,FirstExam,SecondExam,Ready")] StudentsReport studentsReport)
+        public ActionResult Create([Bind(Include = "id,StudentId,CirruculumId,FirstExam,SecondExam,Ready,Absent")] StudentsReport studentsReport)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +94,7 @@ namespace Test.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,StudentId,CirruculumId,FirstExam,SecondExam,Ready")] StudentsReport studentsReport)
+        public ActionResult Edit([Bind(Include = "id,StudentId,CirruculumId,FirstExam,SecondExam,Ready,Absent")] StudentsReport studentsReport)
         {
             if (ModelState.IsValid)
             {

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DbMigrationExampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DbMigrationExampleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Curriculum">
           <Key>
             <PropertyRef Name="Id" />
@@ -40,6 +40,7 @@
           <Property Name="FirstExam" Type="int" />
           <Property Name="SecondExam" Type="int" />
           <Property Name="Ready" Type="bit" />
+          <Property Name="Absent" Type="int" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -169,8 +170,7 @@
             <End Role="StudentsReports" EntitySet="StudentsReports" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DbMigrationExampleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -218,6 +218,7 @@
           <Property Name="Ready" Type="Boolean" />
           <NavigationProperty Name="Curriculum" Relationship="Self.FK_StudentsReports_Cirruculum" FromRole="StudentsReports" ToRole="Curriculum" />
           <NavigationProperty Name="Student" Relationship="Self.FK_StudentsReports_Student" FromRole="StudentsReports" ToRole="Student" />
+          <Property Name="Absent" Type="Int32" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -387,6 +388,7 @@
           <EntitySetMapping Name="StudentsReports">
             <EntityTypeMapping TypeName="DbMigrationExampleModel.StudentsReport">
               <MappingFragment StoreEntitySet="StudentsReports">
+                <ScalarProperty Name="Absent" ColumnName="Absent" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="CirruculumId" ColumnName="CirruculumId" />

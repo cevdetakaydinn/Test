@@ -4,13 +4,11 @@
     ViewBag.Title = "Details";
 }
 @Html.Partial("_Sidebar")
-
-<div class="main">
-    <h2>Details</h2>
+<div class="main" id="Grid">
+    <h2>Report</h2>
 
     <div>
         <h4>Student</h4>
-        <hr />
         <dl class="dl-horizontal">
             <dt>
                 <h3>Name</h3>
@@ -27,7 +25,13 @@
             <dd>
                 @ViewBag.userInfo.Email
             </dd>
+            <dt>
+                <h3>Total Absent</h3>
+            </dt>
 
+            <dd>
+                @ViewBag.totalAbsent
+            </dd>
             <dt>
                 @Html.DisplayNameFor(model => model.StudentNo)
             </dt>
@@ -38,8 +42,58 @@
 
         </dl>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+
+    <table class="table">
+        <tr>
+            <th>
+                First Exam
+            </th>
+            <th>
+                Second Exam
+            </th>
+            <th>
+                Lesson Name
+            </th>
+            <th>
+                Absenty
+            </th>
+        </tr>
+
+        @foreach (var item in ViewBag.reports)
+        {
+            <tr>
+                <td>
+                    @item.FirstExam
+                </td>
+                <td>
+                    @item.SecondExam
+                </td>
+                <td>
+                    @item.Curriculum.Lesson.Name
+                </td>
+                <td>
+                    @item.Absent
+                </td>
+            </tr>
+        }
+
+    </table>
+
 </div>
+@using (Html.BeginForm("Export", "Students", FormMethod.Post))
+{
+    <input type="hidden" name="GridHtml" />
+    <input type="submit" id="btnSubmit" value="Export" />
+}
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {
+            $("input[name='GridHtml']").val($("#Grid").html());
+        });
+    });
+</script>

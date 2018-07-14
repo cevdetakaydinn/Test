@@ -24,6 +24,13 @@ namespace Test.Models
         public int Id { get; set; }
         public Nullable<int> Year { get; set; }
         public string Term1 { get; set; }
+        public string AcademicTerm
+        {
+            get
+            {
+               return Year + ".sinif " + Term1+".donem";
+            }
+        }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Curriculum> Curricula { get; set; }

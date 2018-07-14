@@ -28,33 +28,39 @@
             <th>
                 @Html.DisplayNameFor(model => model.Student.UserId)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Absent)
+            </th>
             <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstExam)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SecondExam)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ready)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Curriculum.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Student.UserId)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstExam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecondExam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ready)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Curriculum.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Absent)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
         }
 
     </table>
