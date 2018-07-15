@@ -40,7 +40,7 @@ namespace Test.Controllers
         // GET: Teachers/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db2.Users, "Id", "Email");
+            ViewBag.UserId = new SelectList(db2.Users.Where(i=> i.UserRole=="Teacher"), "Id", "Email");
 
             return View();
         }

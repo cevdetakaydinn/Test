@@ -20,7 +20,6 @@
                     <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Tasks", "index", "Tasks", null, new { @class = "nav-link" })</li>
 
                     @if (User.IsInRole("Teacher") || User.IsInRole("Principal"))
                     {
@@ -28,17 +27,14 @@
                     }
                     else if (User.IsInRole("Student"))
                     {
-                        @Html.ActionLink("My Info", "Details", "Students",
+                        @Html.ActionLink("My Info", "DetailsbyUserId", "Students",
                         new {
                             //Need to send student id by finding user id via controller!!
-                            id = User.Identity.GetUserId()
+                               id = User.Identity.GetUserId()
                         },
                         new { @class = "nav-link" })
                     }
 
-
-
-                    <li>@Html.ActionLink("MyTasks", "LoadTaskbyUser", "Tasks", new { UserId = User.Identity.GetUserId() }, new { @class = "nav-link" })</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
                 <ul class="nav navbar-nav navbar-right mr-auto">

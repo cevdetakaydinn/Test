@@ -27,6 +27,14 @@ namespace Test.Controllers
            
             return View(db.Students.ToList());
         }
+        //Öğrencilerin Bilgilerini Göstermek. UserId kullanarak
+        [Authorize(Roles = "Principal,Teacher,Student")]
+        public ActionResult DetailsbyUserId(String id)
+        {
+            var studentId = db.Students.Where(i => i.UserId == id).First();
+            return RedirectToAction("Details","Students",new { id=studentId.Id });
+        }
+
 
         // GET: Students/Details/5
         [Authorize(Roles = "Principal,Teacher,Student")]
@@ -67,7 +75,7 @@ namespace Test.Controllers
         [Authorize(Roles = "Principal,Teacher")]
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db2.Users, "Id", "Email");
+            ViewBag.UserId = new SelectList(db2.Users.Where(i => i.UserRole == "Student"), "Id", "Email");
             ViewBag.TermId = new SelectList(db.Terms, "Id", "AcademicTerm");
             return View();
         }

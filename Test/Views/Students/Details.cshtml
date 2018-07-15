@@ -3,7 +3,11 @@
 @{
     ViewBag.Title = "Details";
 }
-@Html.Partial("_Sidebar")
+@if (!User.IsInRole("Student"))
+{
+    @Html.Partial("_Sidebar")
+}
+
 <div class="main" id="Grid">
     <h2>Report</h2>
 
@@ -85,15 +89,18 @@
     <input type="hidden" name="GridHtml" />
     <input type="submit" id="btnSubmit" value="Export" />
 }
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@if (!User.IsInRole("Student"))
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
-    $(function () {
-        $("#btnSubmit").click(function () {
-            $("input[name='GridHtml']").val($("#Grid").html());
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#Grid").html());
+            });
         });
-    });
 </script>
