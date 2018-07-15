@@ -48,8 +48,12 @@ namespace Test.Controllers
             ViewBag.userInfo = db2.Users.Find(student.UserId);
             var reports = student.StudentsReports.ToList();
             ViewBag.reports = reports;
-            //Toplam devamsızlık hesabı
-            int TotalAbsent=0;
+            var curricula = db.Curricula.Where(i => i.TermId == student.TermId).ToList();
+            int curriculumLength = curricula.Count();
+            //Toplam devamsızlık ve karne basma uygunluk hesabı
+            int TotalAbsent = 0;
+            Boolean ready = true;
+            int TotalLessons = 0;
             if (reports != null)
             {
                 foreach (var i in reports)
@@ -59,10 +63,22 @@ namespace Test.Controllers
                         i.Absent = 0;
                     }
                     TotalAbsent = TotalAbsent + (int)i.Absent;
+                    //Eğer bitane bile false var sa bütün kayıtlar hazır değil demektir.
+                    if(i.Ready == false)
+                    {
+                        ready = false;
+                    }
+                    TotalLessons = TotalLessons + 1;
                 }
 
             }
+            //Öğrencinin bütün dersleri girilmişmi
+            if (!(TotalLessons == curriculumLength))
+            {
+                ready = false;
+            }
             ViewBag.totalAbsent = TotalAbsent;
+            ViewBag.ready = ready;
 
             if (student == null)
             {

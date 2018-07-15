@@ -108,7 +108,7 @@ namespace Test.Controllers
         }
 
         // GET: StudentsReports/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {
@@ -125,7 +125,7 @@ namespace Test.Controllers
         // POST: StudentsReports/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             StudentsReport studentsReport = db.StudentsReports.Find(id);
             db.StudentsReports.Remove(studentsReport);

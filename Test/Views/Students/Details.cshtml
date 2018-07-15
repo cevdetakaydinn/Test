@@ -84,10 +84,17 @@
     </table>
 
 </div>
-@using (Html.BeginForm("Export", "Students", FormMethod.Post))
+@if (ViewBag.ready)
 {
-    <input type="hidden" name="GridHtml" />
-    <input type="submit" id="btnSubmit" value="Export" />
+    using (Html.BeginForm("Export", "Students", FormMethod.Post))
+    {
+        <input type="hidden" name="GridHtml" />
+        <input type="submit" id="btnSubmit" value="Export" />
+    }
+}
+else
+{
+        <p>Report is not ready to be created</p>
 }
 @if (!User.IsInRole("Student"))
 {
