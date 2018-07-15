@@ -10,6 +10,7 @@ using Test.Models;
 
 namespace Test.Controllers
 {
+    [Authorize(Roles = "Principal,Teacher")]
     public class StudentsReportsController : Controller
     {
         private DbMigrationExampleEntities1 db = new DbMigrationExampleEntities1();
@@ -62,9 +63,23 @@ namespace Test.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.StudentsReports.Add(studentsReport);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //Eper Öğrenciye Ders atanmışsa tekrarı engelle
+                int reportCount = db.StudentsReports.Where
+                    (
+                        i => i.StudentId == studentsReport.StudentId &&i.CirruculumId== studentsReport.CirruculumId 
+                    ).Count();
+                if (reportCount == 0)
+                {
+                    db.StudentsReports.Add(studentsReport);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["error"] = "Student Report Already Exist";
+                    return RedirectToAction("Create");
+                }
+
             }
 
             ViewBag.CirruculumId = new SelectList(db.Curricula, "Id", "Id", studentsReport.CirruculumId);

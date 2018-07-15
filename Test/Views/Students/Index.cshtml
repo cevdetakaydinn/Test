@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Test.Models.Student>
 
+
 @{
     ViewBag.Title = "Index";
 }
@@ -7,7 +8,6 @@
 
 <div class="main">
     <h2>Index</h2>
-
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
@@ -38,12 +38,13 @@
                     @Html.DisplayFor(modelItem => item.Term.Year)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id  },new { @class="btn btn-warning" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }
 
     </table>
+
 </div>

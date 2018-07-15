@@ -10,6 +10,7 @@ using Test.Models;
 
 namespace Test.Controllers
 {
+    [Authorize(Roles = "Principal,Teacher")]
     public class CurriculaController : Controller
     {
         private DbMigrationExampleEntities1 db = new DbMigrationExampleEntities1();
@@ -55,6 +56,19 @@ namespace Test.Controllers
             if (ModelState.IsValid)
             {
                 db.Curricula.Add(curriculum);
+                //Curriculum oluşturunca otomatik olarak o sınıfa ait olan öğrencileri derse ata
+                var students = db.Students.Where(i => i.TermId == curriculum.TermId);
+                foreach(Student x in students)
+                {
+                    StudentsReport report = new StudentsReport();
+                    var rnd = new Random(DateTime.Now.Millisecond);
+                    report.id = rnd.Next(0, 3000);
+                    report.Absent = 0;
+                    report.CirruculumId = curriculum.Id;
+                    report.StudentId = x.Id;
+                    report.Ready = false;
+                    db.StudentsReports.Add(report);
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -24,15 +24,20 @@ namespace Test.Controllers
         [Authorize(Roles = "Principal,Teacher")]
         public ActionResult Index()
         {
-           
+            ViewBag.userInfo = (IEnumerable<dynamic>)db2.Users.ToList();
             return View(db.Students.ToList());
         }
         //Öğrencilerin Bilgilerini Göstermek. UserId kullanarak
         [Authorize(Roles = "Principal,Teacher,Student")]
         public ActionResult DetailsbyUserId(String id)
         {
-            var studentId = db.Students.Where(i => i.UserId == id).First();
-            return RedirectToAction("Details","Students",new { id=studentId.Id });
+            var x = db.Students.Where(i => i.UserId == id);
+            if (x.Count()>0)
+            {
+                var studentId = db.Students.Where(i => i.UserId == id).First();
+                return RedirectToAction("Details", "Students", new { id = studentId.Id });
+            }
+            return RedirectToAction("index", "Home");
         }
 
 

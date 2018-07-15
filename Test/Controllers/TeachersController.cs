@@ -30,6 +30,7 @@ namespace Test.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Teacher teacher = db.Teachers.Find(id);
+            ViewBag.userInfo = db2.Users.Find(teacher.UserId);
             if (teacher == null)
             {
                 return HttpNotFound();
