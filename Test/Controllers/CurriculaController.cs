@@ -42,7 +42,7 @@ namespace Test.Controllers
         {
             ViewBag.LessonId = new SelectList(db.Lessons, "Id", "Name");
             ViewBag.TeacherId = new SelectList(db.Teachers, "Id", "UserId");
-            ViewBag.TermId = new SelectList(db.Terms, "Id", "Term1");
+            ViewBag.TermId = new SelectList(db.Terms, "Id", "AcademicTerm");
             return View();
         }
 
@@ -51,25 +51,31 @@ namespace Test.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,LessonId,TeacherId,TermId")] Curriculum curriculum)
+        public ActionResult Create([Bind(Include = "LessonId,TeacherId,TermId")] Curriculum curriculum)
         {
             if (ModelState.IsValid)
             {
-                db.Curricula.Add(curriculum);
-                //Curriculum oluşturunca otomatik olarak o sınıfa ait olan öğrencileri derse ata
-                var students = db.Students.Where(i => i.TermId == curriculum.TermId);
-                foreach(Student x in students)
+                //Eğer ders ve yıl daha önce varsa ders müfredata eklenmiş demektir
+                int recordExist = db.Curricula.Where(i => i.LessonId == curriculum.LessonId && i.TermId == curriculum.TermId).Count();
+                if (!(recordExist > 0))
                 {
-                    StudentsReport report = new StudentsReport();
-                    var rnd = new Random(DateTime.Now.Millisecond);
-                    report.id = rnd.Next(0, 3000);
-                    report.Absent = 0;
-                    report.CirruculumId = curriculum.Id;
-                    report.StudentId = x.Id;
-                    report.Ready = false;
-                    db.StudentsReports.Add(report);
+                    db.Curricula.Add(curriculum);
+                    //Curriculum oluşturunca otomatik olarak o sınıfa ait olan öğrencileri derse ata
+                    var students = db.Students.Where(i => i.TermId == curriculum.TermId);
+                    foreach (Student x in students)
+                    {
+                        StudentsReport report = new StudentsReport();
+                        var rnd = new Random(DateTime.Now.Millisecond);
+                        report.id = rnd.Next(0, 3000);
+                        report.Absent = 0;
+                        report.CirruculumId = curriculum.Id;
+                        report.StudentId = x.Id;
+                        report.Ready = false;
+                        db.StudentsReports.Add(report);
+                    }
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

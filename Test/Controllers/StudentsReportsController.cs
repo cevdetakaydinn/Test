@@ -15,6 +15,7 @@ namespace Test.Controllers
     {
         private DbMigrationExampleEntities1 db = new DbMigrationExampleEntities1();
 
+
         // GET: StudentsReports Eğer parametre varsa öğrenciye ait dersnotlarını listele
         public ActionResult Index(int? i)
         {   
@@ -32,7 +33,7 @@ namespace Test.Controllers
         }
 
         // GET: StudentsReports/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int id)
         {
             if (id == null)
             {
@@ -59,7 +60,7 @@ namespace Test.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,StudentId,CirruculumId,FirstExam,SecondExam,Ready,Absent")] StudentsReport studentsReport)
+        public ActionResult Create([Bind(Include = "StudentId,CirruculumId,FirstExam,SecondExam,Ready,Absent")] StudentsReport studentsReport)
         {
             if (ModelState.IsValid)
             {

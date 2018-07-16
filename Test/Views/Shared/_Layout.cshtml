@@ -18,8 +18,6 @@
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
 
                     @if (User.IsInRole("Teacher") || User.IsInRole("Principal"))
                     {
@@ -29,7 +27,6 @@
                     {
                         @Html.ActionLink("My Info", "DetailsbyUserId", "Students",
                         new {
-                            //Need to send student id by finding user id via controller!!
                                id = User.Identity.GetUserId()
                         },
                         new { @class = "nav-link" })

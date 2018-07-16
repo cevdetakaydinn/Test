@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<Test.Models.StudentsReport>
-
 @{
     ViewBag.Title = "Index";
 }
 @Html.Partial("_Sidebar")
-
 <div class="main">
     <h2>Index</h2>
 
@@ -26,7 +24,7 @@
                 @Html.DisplayNameFor(model => model.Curriculum.Lesson.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Student.UserId)
+                FirstName
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Absent)
@@ -49,9 +47,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Curriculum.Lesson.Name)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.UserId)
-            </td>
+            <td> 
+                <!--Ajaxla UserId nin ait olduğu kişiyi getir Test aşamasında id nin sayısal olarak artırılması sağlanıp fonksiyonunu buttonsuz gösterilmesi gerekmekte-->
+                <span class="userId">@Html.DisplayFor(modelItem => item.Student.UserId)</span>
+               
+
+</td>
             <td>
                 @Html.DisplayFor(modelItem => item.Absent)
             </td>
@@ -65,3 +66,5 @@
 
     </table>
     </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="~/Scripts/App.js"></script>

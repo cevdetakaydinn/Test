@@ -55,6 +55,7 @@ namespace Test.Controllers
             ViewBag.reports = reports;
             var curricula = db.Curricula.Where(i => i.TermId == student.TermId).ToList();
             int curriculumLength = curricula.Count();
+
             //Toplam devamsızlık ve karne basma uygunluk hesabı
             int TotalAbsent = 0;
             Boolean ready = true;
@@ -107,7 +108,7 @@ namespace Test.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Principal,Teacher")]
-        public ActionResult Create([Bind(Include = "Id,UserId,StudentNo,TermId")] Student student)
+        public ActionResult Create([Bind(Include = "UserId,StudentNo,TermId")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -199,7 +200,14 @@ namespace Test.Controllers
                 return File(stream.ToArray(), "application/pdf", "Grid.pdf");
             }
         }
+        [HttpGet]
+        public JsonResult GetUserById(string id)
+        {
+            System.Diagnostics.Debug.WriteLine("UserId"+id);
+            var user = db2.Users.Find(id);
 
+            return Json(user.FirstName, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

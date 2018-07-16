@@ -28,10 +28,9 @@ namespace Test.Models
         {
             get
             {
-               return Year + ".sinif " + Term1+".donem";
+                return Year + ".sinif " + Term1 + ".donem";
             }
         }
-    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Curriculum> Curricula { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -56,6 +56,9 @@
                 Second Exam
             </th>
             <th>
+                Result
+            </th>
+            <th>
                 Lesson Name
             </th>
             <th>
@@ -73,6 +76,14 @@
                     @item.SecondExam
                 </td>
                 <td>
+                    @if(!(item.FirstExam == null))
+                    {
+                        var sum =(item.FirstExam + item.SecondExam) / 2;
+                        @sum
+                    }
+                </td>
+                        
+                <td>
                     @item.Curriculum.Lesson.Name
                 </td>
                 <td>
@@ -84,7 +95,7 @@
     </table>
 
 </div>
-@if (ViewBag.ready)
+@if (ViewBag.ready&&User.IsInRole("Principal"))
 {
     using (Html.BeginForm("Export", "Students", FormMethod.Post))
     {
@@ -94,7 +105,7 @@
 }
 else
 {
-        <p>Report is not ready to be created</p>
+        <p>Report cant be created</p>
 }
 @if (!User.IsInRole("Student"))
 {

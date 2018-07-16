@@ -6,7 +6,7 @@
 
 
 @Html.Partial("_Sidebar")
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="main">
     <p>
         @Html.ActionLink("Create New", "Create")
@@ -23,7 +23,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
+                    <span class="userId">@Html.DisplayFor(modelItem => item.UserId)</span>
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" }) |
@@ -36,3 +36,5 @@
     </table>
     @ViewBag.userInfo
 </div>
+
+<script type="text/javascript" src="~/Scripts/App.js"></script>

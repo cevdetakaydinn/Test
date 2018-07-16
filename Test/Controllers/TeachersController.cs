@@ -41,7 +41,7 @@ namespace Test.Controllers
         // GET: Teachers/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db2.Users.Where(i=> i.UserRole=="Teacher"), "Id", "Email");
+            ViewBag.UserId = new SelectList(db2.Users.Where(i=> i.UserRole=="Teacher" || i.UserRole=="Principal"), "Id", "Email");
 
             return View();
         }
@@ -51,7 +51,7 @@ namespace Test.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId")] Teacher teacher)
+        public ActionResult Create([Bind(Include = "UserId")] Teacher teacher)
         {
             if (ModelState.IsValid)
             {

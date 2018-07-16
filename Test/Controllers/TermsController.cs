@@ -47,7 +47,7 @@ namespace Test.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Year,Term1")] Term term)
+        public ActionResult Create([Bind(Include = "Year,Term1")] Term term)
         {
             if (ModelState.IsValid)
             {

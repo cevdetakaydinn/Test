@@ -20,7 +20,7 @@
                 Teacher
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Term.Term1)
+                Term
             </th>
             <th></th>
         </tr>
@@ -30,12 +30,12 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Lesson.Name)
-                </td>
+                </td>   
                 <td>
                     @Html.DisplayFor(modelItem => item.Teacher.UserId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Term.Term1)
+                    @Html.DisplayFor(modelItem => item.Term.AcademicTerm)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" }) |
